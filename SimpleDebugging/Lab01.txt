@@ -1,0 +1,35 @@
+gdb [-q]
+Gdb <my app> [-q] 
+gdb --args <my app> <args>
+file <my app>
+Sta[rt] [ <args> ]
+Run; r [ <args> ]
+Ctl+c   (SIGINT Interrupt) 
+Bt ; ba[cktrace]; whe[re]
+bt f[ull]
+Up
+Down
+frame
+Inf[o] ar[gs]
+Inf[o] lo[cals]
+inf[o] frame 
+Step; s
+Next; n
+Fin[ish]
+Cont[inue]
+Unt[il]; u
+Print <variable>[ = <value>]
+Set [variable] <variable> = <value>
+Break <where> ; b
+Clear <where>
+Delete <BPt#> ; d
+Enable <BPt#>
+Disable <BPt#>
+Watch <expression>
+(Break - > code location ; watch -> data location)
+info brea[kpoints]
+shell
+kill
+make
+x /15i main
+

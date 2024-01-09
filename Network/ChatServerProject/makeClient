@@ -1,0 +1,28 @@
+# Client side makefile 
+
+TARGET= client.out
+CC= gcc
+CFLAGS= -ansi -g -pedantic
+LIBS= -L/home/user/h74/Generics -lGenerics -lm
+OBJS= ClientNet.o ClientManager.o ClientApp.o TLVProtocol.o ui.o
+
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS) $(LIBS)
+	
+ClientNet.o: ClientNet.c ClientNet.h ADTUtils.h
+	$(CC) $(CFLAGS) -c ClientNet.c
+
+ClientManager.o: ClientManager.c ClientManager.h ClientNet.h TLVProtocol.h ADTUtils.h ui.h
+	$(CC) $(CFLAGS) -c ClientManager.c
+
+ClienApp.o: ClientApp.c ClientManager.h ADTUtils.h
+	$(CC) $(CFLAGS) -c ClienApp.c
+
+TLVProtocol.o: TLVProtocol.c TLVProtocol.h ADTUtils.h
+	$(CC) $(CFLAGS) -c TLVProtocol.c
+
+ui.o: ui.c ui.h ADTUtils.h
+	$(CC) $(CFLAGS) -c ui.c
+	
+clean:
+	rm -f $(TARGET) $(OBJS)

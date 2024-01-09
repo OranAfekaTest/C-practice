@@ -1,0 +1,15 @@
+# makefile Receive
+
+TARGET= Receive.out
+CC= gcc
+CFLAGS= -ansi -g -pedantic
+OBJS= Receive.o
+
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
+	
+Receive.o: Receive.c
+	$(CC) $(CFLAGS) -c Receive.c
+
+clean:
+	rm -f $(TARGET) $(OBJS)	 

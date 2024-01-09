@@ -1,0 +1,41 @@
+# Chat server side makefile 
+
+TARGET= server.out
+CC= gcc
+CFLAGS= -ansi -g -pedantic
+#LIBS= -L/home/user/h74/Generics -lGenerics -lm
+LIBS= -L/home/user/h74/Network/ChatServerProject -lGenDS -lm
+OBJS= ADTUtils.o serverNet.o TLVProtocol.o User.o Group.o UserManager.o GroupManager.o ServerManager.o serverApp.o
+
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS) $(LIBS)
+
+ADTUtils.o: ADTUtils.c ADTUtils.h
+	$(CC) $(CFLAGS) -c ADTUtils.c
+
+serverNet.o: serverNet.c serverNet.h ADTUtils.h
+	$(CC) $(CFLAGS) -c serverNet.c
+
+TLVProtocol.o: TLVProtocol.c TLVProtocol.h ADTUtils.h
+	$(CC) $(CFLAGS) -c TLVProtocol.c
+
+User.o: User.c User.h ADTUtils.h
+	$(CC) $(CFLAGS) -c User.c
+
+Group.o: Group.c Group.h ADTUtils.h
+	$(CC) $(CFLAGS) -c Group.c
+
+UserManager.o: UserManager.c UserManager.h User.h ADTUtils.h
+	$(CC) $(CFLAGS) -c UserManager.c
+
+GroupManager.o: GroupManager.c GroupManager.h Group.h ADTUtils.h
+	$(CC) $(CFLAGS) -c GroupManager.c
+
+ServerManager.o: ServerManager.c ServerManager.h serverNet.h TLVProtocol.h UserManager.h GroupManager.h ADTUtils.h
+	$(CC) $(CFLAGS) -c ServerManager.c
+
+serverApp.o: serverApp.c ServerManager.h
+	$(CC) $(CFLAGS) -c serverApp.c
+	
+clean:
+	rm -f $(TARGET) $(OBJS)

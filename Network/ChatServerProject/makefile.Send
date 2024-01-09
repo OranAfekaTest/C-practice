@@ -1,0 +1,15 @@
+# makefile Send
+
+TARGET= Send.out
+CC= gcc
+CFLAGS= -ansi -g -pedantic
+OBJS= Send.o
+
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
+	
+Send.o: Send.c
+	$(CC) $(CFLAGS) -c Send.c
+
+clean:
+	rm -f $(TARGET) $(OBJS)	 
