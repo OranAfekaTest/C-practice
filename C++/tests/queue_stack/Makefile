@@ -1,0 +1,40 @@
+CXX= g++
+CC = $(CXX)
+
+CXXFLAGS  = -pedantic -Wall -Werror -Wextra
+CXXFLAGS += -g3
+CXXFLAGS += -std=c++17
+
+CPPFLAGS = -DDEBUG
+CPPFLAGS = -I$(INCLUDES_DIR)
+
+INCLUDES_DIR = ../../inc
+SOURCES_DIR = ../../src
+
+OBJS = utest.o $(SOURCES_DIR)/queue_stack.o $(SOURCES_DIR)/stack.o
+TARGET = utest
+
+all: $(TARGET)
+
+$(TARGET) : $(OBJS)
+
+check : $(TARGET)
+	@./$(TARGET) -v
+
+recheck: clean check
+
+clean:
+	@$(RM) ./$(TARGET) $(OBJS)
+
+valgrind: $(TARGET)
+	valgrind --leak-check=yes ./$(TARGET)
+
+$(SOURCES_DIR)/stack.o : $(INCLUDES_DIR)/stack.hpp
+$(SOURCES_DIR)/queue_stack.o : $(INCLUDES_DIR)/queue_stack.hpp $(INCLUDES_DIR)/stack.hpp
+utest.o : $(INCLUDES_DIR)/queue_stack.hpp $(INCLUDES_DIR)/mu_test.h
+
+.PHONY : make clean check valgrind
+
+make:
+	@echo 'Attend a maker faire next year! now back to coding...'
+	@${TRUE}

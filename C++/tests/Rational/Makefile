@@ -1,0 +1,37 @@
+CXX = g++
+CC = $(CXX)
+
+CFLAGS = -Wall -Werror
+CFLAGS+= -Wextra
+CFLAGS+= -pedantic
+
+CXXFLAGS = $(CFLAGS)
+CXXFLAGS += -std=c++17
+
+INCLUDES_DIR = ../../inc
+SOURCES_DIR = ../../src
+
+# flags for preprocessor
+CPPFLAGS = -DDEBUG
+CPPFLAGS = -I$(INCLUDES_DIR)
+
+OBJECTS = $(SOURCES_DIR)/rational.o utest.o
+TARGET = utest
+
+all: $(TARGET)
+
+$(TARGET) : $(OBJECTS)
+
+check : $(TARGET)
+	@./$(TARGET) -v
+
+recheck: clean check
+
+clean:
+	@$(RM) $(TARGET) $(OBJECTS)
+
+.PHONY: make clean check all
+
+# dependencies
+$(SOURCES_DIR)/rational.o: $(INCLUDES_DIR)/rational.hpp
+utest.o: $(INCLUDES_DIR)/rational.hpp

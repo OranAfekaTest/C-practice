@@ -1,0 +1,53 @@
+CXX = g++
+CC = $(CXX)
+
+CFLAGS = -pedantic -Wall -Werror
+CFLAGS += -g3
+CXXFLAGS = $(CFLAGS) -std=c++17
+
+CPPFLAGS = -DDEBUG
+CPPFLAGS = -I$(INCLUDES_DIR)
+
+SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+
+INCLUDES_DIR = ../../inc
+SOURCES_DIR = ../../src
+
+OBJS = $(SOURCES_DIR)/arkanoid.o $(SOURCES_DIR)/pawn.o $(SOURCES_DIR)/paddle.o $(SOURCES_DIR)/ball.o $(SOURCES_DIR)/brick.o $(SOURCES_DIR)/border.o
+
+SOURCE := utest.cpp
+TARGET := utest 
+
+#SOURCE := $(SOURCES_DIR)/arkanoid.cpp
+#TARGET := sfml-app
+
+$(TARGET) : $(OBJS)
+
+all: $(TARGET) $(SFMLFLAGS)
+
+#$(SOURCE) : $(SOURCES_DIR)/utest.o $(INCLUDES_DIR)/mu_test.h
+
+check : $(TARGET)
+	@./$(TARGET) -v
+
+recheck: clean check
+
+clean:
+	@rm -f ./$(TARGET) *.o
+
+
+.PHONY : make clean check
+
+game: $(GAMETARGET) $(SFMLFLAGS)
+#	$(CC) $(GAMESOURCE) $(CPPFLAGS) -o $(GAMETARGET) $(SFMLFLAGS)
+
+make:
+	@echo 'Attend a maker faire'
+	@${TRUE}
+
+$(SOURCES_DIR)/pawn.o : $(INCLUDES_DIR)/pawn.hpp
+$(SOURCES_DIR)/ball.o : $(INCLUDES_DIR)/ball.hpp $(INCLUDES_DIR)/pawn.hpp
+$(SOURCES_DIR)/brick.o : $(INCLUDES_DIR)/brick.hpp $(INCLUDES_DIR)/pawn.hpp
+$(SOURCES_DIR)/paddle.o : $(INCLUDES_DIR)/paddle.hpp $(INCLUDES_DIR)/pawn.hpp
+$(SOURCES_DIR)/border.o : $(INCLUDES_DIR)/border.hpp $(INCLUDES_DIR)/pawn.hpp
+$(SOURCES_DIR)/arkanoid.o : $(INCLUDES_DIR)/ball.hpp $(INCLUDES_DIR)/brick.hpp $(INCLUDES_DIR)/paddle.hpp $(INCLUDES_DIR)/border.hpp
